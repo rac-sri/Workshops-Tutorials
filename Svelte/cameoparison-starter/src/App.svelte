@@ -3,6 +3,7 @@
 	import Game from './screens/Game.svelte';
 	import {onMount} from 'svelte';
 	import {select} from './select.js';
+	import {loadImage} from './utils.js';
 
 	let state = 'welcome';
 	let celebsPromise;
@@ -43,6 +44,9 @@
 
 	onMount(()=>{
 		celebsPromise = loadCelebs();
+
+		loadImage('/icons/right.svg');
+		loadImage('/icons/wrong.svg')
 	})
 </script>
 

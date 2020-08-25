@@ -1,0 +1,51 @@
+const CacheName = `cache${TIMESTAMP}`;
+
+const shell = [
+  "/",
+  "/manifest.json",
+  "/global.css",
+  "/icons/right.svg",
+  "/icons/wrong.svg",
+  "/icons/compare.svg",
+  "/build/bundle.js",
+  "/build/bundle.css",
+];
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches
+      .open(CacheName)
+      .then((cache) => addAll(shell))
+      .then(() => self.skipWaiting())
+  );
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then(async (keys) => {
+      for (const key of keys) {
+        if (key != CacheName) await caches.delete(key);
+      }
+
+      self.clients.claim();
+    })
+  );
+});
+
+self.addEventListener("fetch", (event) => {
+  // try the network first, falling back to cache if offline
+  event.respondWith(
+    caches.open(CACHE_NAME).then(async (cache) => {
+      try {
+        const response = await fetch(event.request);
+        cache.put(event.request, response.clone());
+        return response;
+      } catch (err) {
+        const response = await cache.match(event.request);
+        if (response) return response;
+
+        throw err;
+      }
+    })
+  );
+});
