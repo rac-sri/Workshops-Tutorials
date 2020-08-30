@@ -1,0 +1,8 @@
+node {
+    stage('Checkout) {
+        git "<url>"
+    }
+    stage('Say Hello'){
+        sh "<command to run>"       // eg. sh './hello'
+    }
+}

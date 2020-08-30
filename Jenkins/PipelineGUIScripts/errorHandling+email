@@ -1,0 +1,23 @@
+node {
+   try {
+       stage('echo'){
+           sh 'echo "Hello world"'
+           def obj = null
+           sh "${obj.class}"
+       }
+   }
+   catch(NullPointerException e){
+       error 'broken pipelin - null pointer exception'
+       currentBuild.result = 'FAILURE'
+       // currentBuild.result = 'UNSTABLE'
+   }
+   finally {
+       // instructions
+
+       stage('Send Notification){
+           mail to:'email address',
+                body:"Something is wrong with ${env.BUILD_URL}",
+                subject: "Failed Pipeline: ${currentBuild.fullDisplayName}"
+       }
+   }
+}
