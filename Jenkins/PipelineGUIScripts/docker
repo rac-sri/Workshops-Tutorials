@@ -1,0 +1,10 @@
+pipeline {
+    agent { docker { label 'linux' image 'mavin:3.5-alpine'} }
+    stages {
+        stage('Example build'){
+            steps {
+                sh 'mvn --version'
+            }
+        }
+    }
+}

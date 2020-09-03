@@ -1,7 +1,7 @@
 ### Initializing
 
 ```
-- vargrant init bento/ubuntu-20.04
+- vagrant init bento/ubuntu-20.04
 - vagrant up jenkins_master
 - vagrant ssh
 - Install Jenkins following instructions ( + install java jdk seprately if needed)
@@ -39,3 +39,7 @@
 One of the default environment variables. We can share the same workspace among different jobs.
 
 You can pass this as an env variable, in post build actions, in "Trigger Parameterized Build on Other Projects" and then use that in the next Project by setting custom workspace and parameters.
+
+### Docker
+
+- If installing docker on a node, disconnect and reconnect the node for jenkins to run it.
