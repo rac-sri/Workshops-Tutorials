@@ -43,3 +43,13 @@ You can pass this as an env variable, in post build actions, in "Trigger Paramet
 ### Docker
 
 - If installing docker on a node, disconnect and reconnect the node for jenkins to run it.
+
+### MultiBranch Project
+
+- use if you just want to perform certain action on master
+
+```
+   when {
+       branch 'master
+   }
+```
