@@ -35,4 +35,37 @@ ansible [-i <inventary file>] servername:group:group2 -m module [-1 argument_val
 // imp
 
 - ansible group/ip -m file -a "path=... state=touch" // create file (touch->mkdir for dir) -b or -k // to get elevated priviledges
+
+- ansible group/ip -m yum -a "name=git state=latest" -b
+
+- ansbile ip/group db -m setup // get server information  - default facts
+```
+
+Dynamic Inventory
+
+```
+- Download ec2.py and ec2.ini from official repo
+- ansible -i ec2.py -m ping
+```
+
+Raw Module
+
+```
+ansible group/ip -m raw -a "scp "
+```
+
+Playbook:
+
+```
+- ansible-playbook <playbook>  // -v verbosity
+```
+
+Command Line Arg:
+
+```
+- ansible-playbook cmd_line.yml -e "x=56 y='ansible playbooks'"
+- ansbile-playbook cmd_line.yml -e "{'x':[3,4,5,6]}"
+- ansbile-playbook cmd_line.yml -e "{'x':{'one':1,'two':2}}"
+- ansbile-playbook cmd_line.yml -e "@variable_values.yml"
+- ansible-playbook install_uninstall_httpd.yml -e "pkg="nginx" req_state="present"
 ```

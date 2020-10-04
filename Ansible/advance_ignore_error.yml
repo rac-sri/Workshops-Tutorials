@@ -1,0 +1,31 @@
+---
+- hosts: web_servers
+  gather_facts: true
+  tasks:
+    - block:
+        - name: Installing httpd for RedHat os family
+          yum:
+            name: httpd
+            state: present
+          when: ansible_os_family=="RedHat"
+        - name: starting httpdfor RedHat os family
+          service:
+            name: httpd
+            state: started
+          when: ansible_os_family=="RedHat"
+      become: yes
+
+    - block:
+        - name: Installing apache2 for Debian os family
+          yum:
+            name: apache2
+            state: present
+          when: ansible_os_family=="Debian"
+        - name: starting apache2for Debian os family
+          service:
+            name: apache2
+            state: started
+          when: ansible_os_family=="RedHat"
+          become: yes
+    - debug:
+        msg: "Successfully completed all tasks"

@@ -1,0 +1,20 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - block:
+        - command: "ls /home/${User}/tomcat7"
+          register: tomcat7_out
+        - debug: var=tomcat7_out
+        - command: "ls /home/${USER}/tomcat8"
+          register: tomcat8_out
+          ignore_errors: yes
+        - debug: var=tomcat8_out
+        - command: "ls /home/${USER}/tomcat9"
+          register: tomcat9_out
+        - debug: var=tomcat9_out
+
+      ignore_errors: yes
+    - debug: var=tomcat9_out
+    - debug: var=tomcat9_out
+    - debug: var=tomcat9_out

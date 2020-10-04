@@ -1,0 +1,9 @@
+---
+- name: This is simple play for debug
+  hosts: localhost
+  tasks:
+    - name: Printing with debug
+      debug:
+        msg:
+          - "Welcome to Ansible Playbooks"
+          - "These are the basics"
