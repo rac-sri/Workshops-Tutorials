@@ -1,0 +1,14 @@
+---
+- name: sample play to launch ec2 instance
+  hosts: localhost
+  connection: ssh
+  gather_facts: false
+  tasks:
+    - name: Simple tasl to launch ec2 instance with default values
+      ec2:
+        instance_type: t2.micro
+        image: ami-00eb20669e0990cb4
+        region: us-east-1
+        # below two automatically detected if boto3, awscli installed and configured on master
+        # aws_access_key: <key>
+        # aws_secret_key: <secret_key>
