@@ -1,0 +1,44 @@
+---
+- name: Install and configure tomcat
+  hosts: localhost
+  gather_facts: false
+  become: yes
+  vars:
+    req_java: openjdk-8-jdk
+    set_java: jre-1.8.0-openjdk
+    tomcat_port: 8090
+    req_tomcat_ver: 9.0.26
+  vars_files:
+    - "vars/localhost.yml"
+  tasks:
+    - name: Update respositories
+      apt:
+        name: "*"
+        state: latest
+    - name: Installing required java
+      apt:
+        name: "{{req_java}}"
+        state: present
+    - name: Setting default java
+      alternatives:
+        name: java
+        link: /usr/bin/java
+        path: /usr/lib/jvm/{{set_java}}/bin/java
+        req_tomcat_ver: 9.0.26
+    - name: Downloading from Url
+      get_url:
+        url: http://mirrors.estointernet.in/apache/tomcat/tomcat-9/v9.0.26/bin/apache-tomcat-9.0.26.tar.gz
+        dest: /usr/local
+    - name: Extracting tomcat
+      unarchive:
+        src: "/usr/local/apache-tomcat-{{req_tomcat_ver}}.tar.gz"
+        dest: /usr/local
+        remote_src: yes
+    - name: Renaiming tomact home
+      command: mv /usr/local/apache-tomcat-{{req_tomcat_ver}} /usr/local/latest
+    - name: Dynamically replacing the default port with required port
+      template:
+        src: server.json.j2
+        dest: /usr/local/latest/conf/server.json
+    - name: Starting tomcat
+      shell: nohup /usr/local/latest/bin/startup.sh &
