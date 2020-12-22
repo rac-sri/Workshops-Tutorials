@@ -8,6 +8,13 @@ type User struct {
 	FirstName, LastName, Email string
 }
 
+type Group struct {
+	role string
+	users []User
+	newwestUser ser
+	spaceAvailable bool
+}
+
 // // User is a user type
 // type User struct {
 // ID					       int
@@ -17,5 +24,6 @@ type User struct {
 func main() {
 	u := User{ID: 1, FirstName: "Marilyn", LastName: "Monroe", Email: "marilyn.monroe@gmail.com"}
 
+	fmt.Println(u.FirstName)
 	fmt.Println(u)
 }
