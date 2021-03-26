@@ -5,9 +5,6 @@
       title="Task Tracker"
       :showAddTask="showAddTask"
     />
-    <div v-show="showAddTask">
-      <AddTask @add-task="addTask" />
-    </div>
     <router-view :showAddTask="showAddTask"></router-view>
     <Footer />
   </div>
@@ -16,17 +13,14 @@
 <script>
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import AddTask from "./components/AddTask";
 export default {
   name: "App",
   components: {
     Header,
     Footer,
-    AddTask,
   },
   data() {
     return {
-      tasks: [],
       showAddTask: false,
     };
   },
